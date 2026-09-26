@@ -40,19 +40,11 @@ class BodyWidget extends StatelessWidget {
         spacing: 20,
         runSpacing: 20,
         alignment: WrapAlignment.center,
-        
-
-    @override
-    Widget build(BuildContext context) {
-          return ListView(
-          children: (
+        children: [
           for(int i = 0; i < products.length; i++)
-            ProductWidget(product: products);
-          )
-          )
-    )
-    }
-      return Container(
-);
+            ProductWidget(product: products[i])
+        ]
+      )
+    );
   }
 }

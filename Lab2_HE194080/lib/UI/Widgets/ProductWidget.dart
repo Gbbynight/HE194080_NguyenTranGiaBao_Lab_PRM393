@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
 import '../../Models/Product.dart'; // Import Product Model
 
+class ButtonLike extends StatefulWidget {
+  const ButtonLike({super.key});
+
+  @override
+  State<ButtonLike> createState() => _ButtonLikeState();
+}
+
+class _ButtonLikeState extends State<ButtonLike> {
+  int x = 0; // Trả lại biến x giống của bạn
+
+  void changeLike() {
+    setState(() {
+      // Logic của bạn: Nếu x == 0 thì thành 1, nếu x == 2 thì thành 3, ngược lại về 0
+      x = x == 0 ? 1 : x == 2 ? 3 : 0;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: changeLike,
+      // Icon: Sửa Icons.start thành Icons.star_border để tránh báo lỗi (vì không có icon tên là start)
+      icon: Icon(x == 2 ? Icons.star_border : Icons.star), 
+      // Color: Giữ nguyên logic của bạn
+      color: x == 0 ? Colors.grey : Colors.yellow,
+    );
+  }
+}
 class ProductWidget extends StatelessWidget {
-  // THAY VÌ NHẬN 5 BIẾN LẺ, MÌNH NHẬN LUÔN OBJECT PRODUCT CHO GỌN
+
   final Product product;
 
   const ProductWidget({
@@ -44,10 +72,27 @@ class ProductWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  // KHUNG TÊN
-                  Text(
-                    product.name, // Lấy tên từ object product
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  // DÒNG CHỨA TÊN SẢN PHẨM VÀ NÚT LIKE
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Khung Tên (chiếm nhiều không gian hơn)
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          product.name, 
+                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      // Khung nút Like (Căn lề phải như ý bạn muốn)
+                      const Expanded(
+                        flex: 1, 
+                        child: Align(
+                          alignment: Alignment.centerRight, 
+                          child: ButtonLike(),
+                        ),
+                      ),
+                    ],
                   ),
                   
                   // KHUNG MÔ TẢ (Description)
@@ -85,7 +130,7 @@ class ProductWidget extends StatelessWidget {
                   Align(
                     alignment: Alignment.centerRight,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {Navigator.push(context,MaterialPageRoute(builder: (context) => Lab4page()},
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
                         foregroundColor: Colors.white,
